@@ -1,6 +1,7 @@
-/*const getDb = require('../utility/database').getDb;
+const getDb = require('../utility/database').getdb;
+const mongodb = require('mongodb');
 
-class Product{
+class Product {
     constructor(name, price, description, imageUrl){
         this.name = name;
         this.price = price;
@@ -18,11 +19,36 @@ class Product{
             })
             .catch(err => { console.log(err) }); 
     }
-}*/
+
+    static findAll() {
+        const db = getDb();
+        return db.collection('products')
+            .find()
+            .toArray()
+            .then(products => {
+                return products;
+            })
+            .catch(err => console.log(err));
+    }
+
+    static findById(productid) {
+        const db = getDb();
+        
+        return db.collection('products').
+            findOne({ _id: new mongodb.ObjectId(productid) })
+            .then(product => {
+                return product;
+            }).catch(err => {
+                console.log(err);
+            });
+    }
+}
+
+module.exports = Product;
 
 
 
-const products = [
+/*const products = [
     { id:"13213", name: 'samsung s6', price: '2000', imageUrl: '1.jpg', description: 'iyi telefon'},
     { id:"13214", name: 'samsung s7', price: '3000', imageUrl: '2.jpg', description: 'iyi telefon'},
     { id:"13215", name: 'samsung s8', price: '4000', imageUrl: '3.jpg', description: 'iyi telefon'}];
@@ -63,4 +89,4 @@ module.exports = class Product {
         const index = products.findIndex(i => i.id===id);
         products.splice(index, 1);
     }
-}
+}*/
