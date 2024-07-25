@@ -65,19 +65,32 @@ exports.getEditProduct = (req, res, next) => {
 }
 
 exports.postEditProduct = (req, res, next) => {
+
+  const id = req.body.id;
+  const name = req.body.name;
+  const price = req.body.price;
+  const imageUrl = req.body.imageUrl;
+  const description = req.body.description;
   
-  const product = Product.getById(req.body.id);
+  const product = new Product(name, price, description, imageUrl, id);
 
-  product.name = req.body.name;
-  product.price = req.body.price;
-  product.imageUrl = req.body.imageUrl;
-  product.description = req.body.description;
-
-  Product.Update(product);
-  res.redirect('/admin/products?action=edit');
+  product.save()
+      .then(result => {
+          res.redirect('/admin/products?action=edit');
+      })
+      .catch(err => console.log(err));
 }
 
-exports.postDeleteProduct = (req,res,next) => {
-  Product.DeleteById(req.body.productid);
-  res.redirect('/admin/products?action=delete');
+exports.postDeleteProduct = (req, res, next) => {
+
+  const id = req.body.productid;
+
+  Product.deleteById(id)
+      .then(() => {
+          console.log('product has been deleted.');
+          res.redirect('/admin/products?action=delete');
+      })
+      .catch(err => {
+          console.log(err);
+      });
 }

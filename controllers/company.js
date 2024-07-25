@@ -2,36 +2,50 @@ const Product = require('../models/product');
 
 exports.getIndex = (req, res, next) => {
 
-  const products = Product.getAll();
-  res.render("company/index", 
-      { 
-        title: "Company", 
-        products: products,
-        path: '/'
-    });
+  Product.findAll()
+      .then(products => {
+        console.log(products);  
+        console.log(products);
+          res.render('company/index', {
+              title: 'yilmazmachine',
+              products: products,
+              path: '/'
+          });
+      })
+      .catch((err) => {
+          console.log(err);
+      });
 }
 
- exports.getProducts = (req, res, next) => {
+exports.getProducts = (req, res, next) => {
 
-    const products = Product.getAll();
-    res.render("company/products", 
-        { 
-          title: "Products", 
-          products: products,
-          path: '/products'
+  Product.findAll()
+      .then(products => {
+          res.render('company/products', {
+              title: 'Products',
+              products: products,
+              path: '/'
+          });
+      })
+      .catch((err) => {
+          console.log(err);
       });
-  }
+}
 
-  exports.getProduct = (req, res, next) => {
-    const product = Product.getById(req.params.productid);
-  
-    res.render('company/product-detail', {
-      title: product.name,
-      product: product,
-      path: '/products'
-    });
-    
-  }
+exports.getProduct = (req, res, next) => {
+
+  Product.findById(req.params.productid)
+      .then(product => {
+          res.render('company/product-detail', {
+              title: product.name,
+              product: product,
+              path: '/products'
+          });
+      })
+      .catch((err) => {
+          console.log(err);
+      });
+}
 
   exports.getProductDetails = (req, res, next) => {
 

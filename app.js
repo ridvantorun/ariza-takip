@@ -8,7 +8,7 @@ app.set('view engine','pug');
 app.set('views','./views');
 
 const adminRoutes = require("./routes/admin");
-//const userRoutes = require("./routes/company");
+const userRoutes = require("./routes/company");
 //const accountRoutes = require('./routes/account');
 
 const errorController = require('./controllers/errors');
@@ -19,7 +19,7 @@ app.use(express.static(path.join(__dirname, "public")));
 
 // routes
 app.use("/admin", adminRoutes);
-//app.use(userRoutes);
+app.use(userRoutes);
 //app.use(accountRoutes);
 
 app.use(errorController.get404Page);
