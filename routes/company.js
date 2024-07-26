@@ -9,6 +9,8 @@ router.get("/products", companyController.getProducts);
 
 router.get("/products/:productid", companyController.getProduct);
 
+router.get('/categories/:categoryid', companyController.getProductsByCategoryId);
+
 router.get("/details", companyController.getProductDetails);
 
 router.get("/cart", companyController.getCart);

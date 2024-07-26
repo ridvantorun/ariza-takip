@@ -20,9 +20,9 @@ router.get('/add-category', adminController.getAddCategory);
 
 router.post('/add-category', adminController.postAddCategory);
 
-router.get('/categories', adminController.getCategories);
-
 router.get('/categories/:categoryid', adminController.getEditCategory);
+
+router.get('/categories', adminController.getCategories);
 
 router.post('/categories', adminController.postEditCategory);
 
